@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 
-	"github.com/deBeloper-code/bank-go/internal/adapter/database"
 	"github.com/deBeloper-code/bank-go/internal/domain"
 )
 
@@ -11,8 +10,8 @@ type UserRepository struct {
 	db *sql.DB
 }
 
-func NewUserRepository() *UserRepository {
-	return &UserRepository{db: database.GetDBConnection()}
+func NewUserRepository(db *sql.DB) *UserRepository {
+	return &UserRepository{db: &sql.DB{}}
 }
 
 func (r *UserRepository) Save(user *domain.User) error {
