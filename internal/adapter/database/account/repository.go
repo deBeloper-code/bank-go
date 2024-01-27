@@ -11,7 +11,7 @@ type AccountRepository struct {
 }
 
 func NewAccountRepository(db *sql.DB) *AccountRepository {
-	return &AccountRepository{db: &sql.DB{}}
+	return &AccountRepository{db: db}
 }
 
 func (r *AccountRepository) Save(account *domain.Account) error {

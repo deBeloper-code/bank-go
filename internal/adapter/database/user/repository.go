@@ -11,10 +11,11 @@ type UserRepository struct {
 }
 
 func NewUserRepository(db *sql.DB) *UserRepository {
-	return &UserRepository{db: &sql.DB{}}
+	return &UserRepository{db: db}
 }
 
 func (r *UserRepository) Save(user *domain.User) error {
+	r.db.Exec("INSERT INTO users (name, email, password) VALUES ($1, $2, $3)", user.Name, user.Email, user.Password)
 	return nil
 }
 
