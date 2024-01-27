@@ -14,10 +14,12 @@ createdb:
 	docker exec -it bankGo createdb --username=root --owner=root bank_db
 dropdb:
 	docker exec -it bankGo dropdb bank_db
+migratecreate:
+	migrate create -ext sql -dir internal/adapter/database/migrations -seq init_schema
 migrateup:
-	migrate -path internal/db/general_migration -database "postgres://root:secret@localhost:5432/bank_db?sslmode=disable" -verbose up
+	migrate -path internal/adapter/database/migrations -database "postgres://root:secret@localhost:5432/bank_db?sslmode=disable" -verbose up
 migratedown:
-	migrate -path internal/db/general_migration -database "postgres://root:secret@localhost:5432/bank_db?sslmode=disable" -verbose down
+	migrate -path internal/adapter/database/migrations -database "postgres://root:secret@localhost:5432/bank_db?sslmode=disable" -verbose down
 sqlc: 
 	sqlc generate
 test: 
@@ -25,4 +27,4 @@ test:
 serve: 
 	go run cmd/app/main.go
 
-.PHONY: postgres createdb dropdb migrateup sqlc serve test docker-up docker-down docker-start docker-restart docker-stop db-shell containerDB migratedown
+.PHONY: postgres createdb dropdb migrateup sqlc serve test docker-up docker-down docker-start docker-restart docker-stop db-shell containerDB migratedown migratecreate
