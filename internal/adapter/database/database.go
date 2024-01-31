@@ -2,7 +2,6 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 	"sync"
@@ -14,25 +13,25 @@ import (
 )
 
 var (
-	db   *sql.DB
+	db   *gorm.DB
 	once sync.Once
 	dsn  = "host=localhost user=root password=secret dbname=bank_db port=5432 sslmode=disable"
 )
 
-func GetDBConnection() *sql.DB {
+func GetDBConnection() *gorm.DB {
 	once.Do(func() {
 		var err error
-		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Unable to connection DB: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Unable to connect to DB: %v\n", err)
 			os.Exit(1)
 		}
 		// Pool connection
 		sqlDB, err := db.DB()
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Unable to pool connection DB: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Unable to pool connection to DB: %v\n", err)
 			os.Exit(1)
 		}
 		sqlDB.SetMaxIdleConns(10)

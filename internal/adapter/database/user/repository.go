@@ -1,21 +1,31 @@
 package database
 
 import (
-	"database/sql"
-
 	"github.com/deBeloper-code/bank-go/internal/domain"
+	"gorm.io/gorm"
 )
 
 type UserRepository struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
-func NewUserRepository(db *sql.DB) *UserRepository {
+func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
 func (r *UserRepository) Save(user *domain.User) error {
-	r.db.Exec("INSERT INTO users (name, email, password) VALUES ($1, $2, $3)", user.Name, user.Email, user.Password)
+	newUser := domain.User{
+		ID:       user.ID,
+		Username: user.Username,
+		Email:    user.Email,
+		Password: user.Password,
+	}
+	result := r.db.Create(&newUser)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
 	return nil
 }
 

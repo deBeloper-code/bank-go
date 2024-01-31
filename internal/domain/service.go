@@ -10,12 +10,13 @@ func NewUserService(userRepository UserRepository) *UserService {
 	return &UserService{userRepository: userRepository}
 }
 
-func (s *UserService) CreateUser(name string) (*User, error) {
-	user := &User{Name: name}
-	if err := s.userRepository.Save(user); err != nil {
+func (s *UserService) CreateUser(name, email, password string) (*User, error) {
+	createdUser := &User{Username: name, Email: email, Password: password}
+
+	if err := s.userRepository.Save(createdUser); err != nil {
 		return nil, err
 	}
-	return user, nil
+	return createdUser, nil
 }
 
 func (s *UserService) GetUserByID(id int) (*User, error) {

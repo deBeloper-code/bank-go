@@ -1,16 +1,15 @@
 package database
 
 import (
-	"database/sql"
-
 	"github.com/deBeloper-code/bank-go/internal/domain"
+	"gorm.io/gorm"
 )
 
 type AccountRepository struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
-func NewAccountRepository(db *sql.DB) *AccountRepository {
+func NewAccountRepository(db *gorm.DB) *AccountRepository {
 	return &AccountRepository{db: db}
 }
 
