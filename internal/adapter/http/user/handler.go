@@ -36,7 +36,7 @@ func (h *UserHandler) CreateUserHandler(g *gin.Context) {
 		return
 	}
 
-	g.JSON(http.StatusOK, gin.H{"name": userCreated.ID, "Email": userCreated.ID})
+	g.JSON(http.StatusOK, gin.H{"name": userCreated.Username, "Email": userCreated.Email})
 }
 
 func (h *UserHandler) GetUserHandler(g *gin.Context) {}

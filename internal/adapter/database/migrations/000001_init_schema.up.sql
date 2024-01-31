@@ -24,8 +24,6 @@ CREATE TABLE "transfers" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE UNIQUE INDEX ON "users" ("username");
-
 CREATE UNIQUE INDEX ON "users" ("email");
 
 CREATE INDEX ON "accounts" ("owner_id");
