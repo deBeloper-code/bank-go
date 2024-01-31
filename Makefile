@@ -15,7 +15,7 @@ createdb:
 dropdb:
 	docker exec -it bankGo dropdb bank_db
 migratecreate:
-	migrate create -ext sql -dir internal/adapter/database/migrations -seq init_schema
+	migrate create -ext sql -dir internal/adapter/database/migrations -seq $(name)
 migrateup:
 	migrate -path internal/adapter/database/migrations -database "postgres://root:secret@localhost:5432/bank_db?sslmode=disable" -verbose up
 migratedown:

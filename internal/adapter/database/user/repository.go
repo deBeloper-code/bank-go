@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/deBeloper-code/bank-go/internal/domain"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -14,8 +15,11 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 func (r *UserRepository) Save(user *domain.User) error {
+	// Generate a new UUID
+	id := uuid.New()
+	// Create a new user
 	newUser := domain.User{
-		ID:       user.ID,
+		ID:       id,
 		Username: user.Username,
 		Email:    user.Email,
 		Password: user.Password,
